@@ -1,10 +1,10 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";        //createSlice will used to make slice, and nanoid is used to generate unique id
 
-//create intial state
+//create intial state (it can be array or object)
 const initialState = {
   todos: [{
       id: 1,
-      text: hellooo,
+      text: "hellooo",
     }]
 };
 
@@ -49,9 +49,17 @@ export const TodoSlice = createSlice({
       removeTodo: (state, action) => {
           state.todos = state.todos.filter((eachTodo) => eachTodo.id !== action.payload)
       },
+      updateTodo:(state, action) => {
+       state.todos = (prev) => (
+          prev.map((eachTodo) => ( 
+            eachTodo.id === id ? todo : eachTodo
+          ))  
+        )
+      }
+
     },
   });
 
-export const {addTodo, removeTodo} = TodoSlice.actions    //individually exporting reducer bcoz they need in components
+export const {addTodo, removeTodo, updateTodo} = TodoSlice.actions    //individually exporting reducer bcoz they need in components
 export default TodoSlice.reducer                          //our store need list of all reducer to get info of all the methods like (addTodo,removeTodo etc) we have to export reducers too
 
