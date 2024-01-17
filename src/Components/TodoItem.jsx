@@ -40,7 +40,7 @@ function TodoItem () {
        />
 
       {
-        eachTodo.isComplete === false ? <div className="text-white">{eachTodo.text}</div> : <div className="text-red-700">{eachTodo.text}</div>
+        eachTodo.isComplete === false ? <div className="text-white">{eachTodo.text}</div> : <div className="line-through text-white">{eachTodo.text}</div>
       }
 
       <div>
