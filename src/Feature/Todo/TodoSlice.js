@@ -55,7 +55,7 @@ const initialState = {
   todos: [{
       id: 1,
       text: "hellooo",
-      isComplete: false      
+      isComplete: false     
     }],
 
   edit: { id:null, text:null }   
@@ -69,9 +69,10 @@ export const TodoSlice = createSlice({
       addTodo: (state, action) => {
         const todo = {
           id: nanoid(),
-          text: action.payload
+          text: action.payload,
+          isComplete: false
         };
-        state.todos.push(todo)      
+        state.todos.push(todo)  
       },
 
       removeTodo: (state, action) => {
@@ -80,7 +81,7 @@ export const TodoSlice = createSlice({
 
       updateTodo: (state, action) => {
        state.todos = state.todos.map((eachTodo) => {
-          if(action.payload.id == eachTodo.id) {
+          if(eachTodo.id == action.payload.id ) {
             eachTodo.text = action.payload.text
           }
            return eachTodo

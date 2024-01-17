@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo, editTodo, updateTodo } from "../Feature/Todo/TodoSlice"
+import { addTodo, updateTodo } from "../Feature/Todo/TodoSlice"
 
 
 const TodoForm = () => {
@@ -11,12 +11,22 @@ const TodoForm = () => {
    //dispatch use the reducers to add value in the store
    const dispatch = useDispatch()
 
-   const addTodoHandler =(e) => {
+   const editTodo = useSelector((state) =>state.edit)
+  
+   const addTodoHandler = (e) => {
     e.preventDefault()
-    dispatch(addTodo(input))
-    setInput('')
-   }
 
+    // If editTodo.id is null, it means that there is no active editing, so the code after the ? is executed.
+    // If editTodo.id is not null, the code after the : is executed.
+    editTodo.id === null ? dispatch(addTodo(input)) : dispatch(updateTodo({id: editTodo.id, text: input})) 
+
+    setInput('')
+   } 
+
+   useEffect(()=>{
+    setInput(editTodo.text)
+   }, [editTodo])
+  
   return (
     <form onSubmit={addTodoHandler} className="space-x-3 mt-12">
     <input
@@ -30,7 +40,7 @@ const TodoForm = () => {
       type="submit"
       className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
     >
-      Add Todo
+     {editTodo.id === null ? "Add Todo" : "Update Todo"}
     </button>
   </form>
   )
